@@ -648,7 +648,7 @@ class OpeningHours:
         elif len(results_12h) > 0:
             # Parse 12h opening hour information.
             for result in results_12h:
-                if result[-6].startswith("0"):
+                if result[-6] == "00":
                     time_start = "12:"
                 else:
                     time_start = result[-6] + ":"
