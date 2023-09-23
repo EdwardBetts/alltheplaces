@@ -648,7 +648,10 @@ class OpeningHours:
         elif len(results_12h) > 0:
             # Parse 12h opening hour information.
             for result in results_12h:
-                time_start = result[-6] + ":"
+                if result[-6].startswith("0"):
+                    time_start = "12:"
+                else:
+                    time_start = result[-6] + ":"
                 if result[-5]:
                     time_start = time_start + result[-5]
                 else:
@@ -670,6 +673,8 @@ class OpeningHours:
                 else:
                     # If AM/PM is not specified, it is almost always going to be PM for end times.
                     time_end = time_end + "PM"
+                if time_end == "00:00PM":
+                    time_end = "11:59PM"
                 time_end_24h = time.strptime(time_end, "%I:%M%p")
                 time_end_24h = time.strftime("%H:%M", time_end_24h)
                 start_and_end_days = list(filter(None, result[:-6]))
